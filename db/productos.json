@@ -1,0 +1,32 @@
+[
+    {
+        "timestamp": "3/10/2022 00:40:13",
+        "nombre": "nico1",
+        "descripcion": "Desarrollador update",
+        "codigo": "iot",
+        "foto": "js",
+        "precio": "lo suficiente2 update",
+        "stock": 1,
+        "id": "1"
+    },
+    {
+        "timestamp": "3/10/2022 01:20:59",
+        "nombre": "juan",
+        "descripcion": "embb2",
+        "codigo": "iot2",
+        "foto": "wh",
+        "precio": "talento",
+        "stock": 2,
+        "id": "2"
+    },
+    {
+        "timestamp": "3/10/2022 01:22:39",
+        "nombre": "Jeffry",
+        "descripcion": "embb2 FreeRTOS",
+        "codigo": "iot2",
+        "foto": "wh",
+        "precio": "talento",
+        "stock": 2,
+        "id": "3"
+    }
+]
