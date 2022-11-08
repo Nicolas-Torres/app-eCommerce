@@ -13,15 +13,10 @@ class Product {
             console.log(`Error Open File: ${err}`)
         }
     }
-    
-    async add(newData){
-        let actualData = await this.openFile()
-        newData["id"] = (actualData.length + 1).toString()
-        actualData.push(newData)
-        let saveData = JSON.stringify(actualData)
-        await fs.promises.writeFile(`./${this.file}`,saveData)
-    }
 
+    //! CREATE
+
+    //! READ
     async getAll(){
         let actualData = await this.openFile()
         return actualData
@@ -31,10 +26,12 @@ class Product {
         let actualData = await this.openFile()
         let item = actualData.filter((val)=> val.id === id )[0]
         if(item == undefined) throw ({message: `Error: Producto con id ${id} no encontrado.`, status: 404})
-                                    
         else return item
     }
+    
+    //! UPDATE
 
+    //! DELETE
     async deleteAll(){
         let actualData = await this.openFile()
         actualData = []
@@ -42,17 +39,31 @@ class Product {
         fs.promises.writeFile(`./${this.file}`,saveData)
         console.log('All data has been removed.')
     }
-
+    
     async deleteById(id){
         let actualData = await this.openFile()
         let index = actualData.findIndex(val => val.id === id)
         if(index != -1){
+            //* Borra el producto segun su index
             actualData.splice(index,1)
             //! Index format
             actualData.forEach((val,i=0) => val["id"] = (i+1).toString())
         }else{
             throw ({message: `Error: Producto con id ${id} no encontrado.`, status: 404})
         }
+        let saveData = JSON.stringify(actualData)
+        await fs.promises.writeFile(`./${this.file}`,saveData)
+    }
+
+
+
+
+
+
+    async add(newData){
+        let actualData = await this.openFile()
+        newData["id"] = (actualData.length + 1).toString()
+        actualData.push(newData)
         let saveData = JSON.stringify(actualData)
         await fs.promises.writeFile(`./${this.file}`,saveData)
     }

@@ -13,6 +13,53 @@ class Cart {
             console.log(`Error Open File: ${err}`)
         }
     }
+    
+    //! CREATE
+
+    //! READ
+    async getAll(){
+        let allCarts = await this.openFile()
+        return allCarts
+    }
+
+    async getCart(id){
+        let allCarts = await this.openFile()
+        let item = allCarts.filter((val)=> val.id === id )[0]
+        if(item == undefined) throw ({message: `Error: Carrito con id ${id} no encontrado.`, status: 404})        
+        else return item
+    }
+
+    //! UPDATE
+
+    //! DELETE
+    async deleteAllCarts(){
+        let allCarts = await this.openFile()
+        allCarts = []
+        let updateAllCarts = JSON.stringify(allCarts)
+        fs.promises.writeFile(`./${this.file}`,updateAllCarts)
+        console.log('All data has been removed.')
+    }
+
+    async deleteCartById(id){
+        let allCarts = await this.openFile()
+        let cartIndex = allCarts.findIndex(val => val.id === id)
+        if(cartIndex != -1){
+            //* Borra el carrito segun su index
+            allCarts.splice(cartIndex,1)
+            //! Index format
+            allCarts.forEach((val,i=0) => val["id"] = (i+1).toString())
+        }else{
+            throw ({message: `Error: Carrito con id ${id} no encontrado.`, status: 404})
+        }
+        let updateAllCarts = JSON.stringify(allCarts)
+        await fs.promises.writeFile(`./${this.file}`,updateAllCarts)
+    }
+
+
+
+
+
+
 
     async newCart() {
         let allCarts = await this.openFile()
@@ -48,26 +95,6 @@ class Cart {
         console.log(newProducts)
     }
 
-    async getAll(){
-        let allCarts = await this.openFile()
-        return allCarts
-    }
-
-    async getCart(id){
-        let allCarts = await this.openFile()
-        let item = allCarts.filter((val)=> val.id === id )[0]
-        if(item == undefined) throw ({message: `Error: Carrito con id ${id} no encontrado.`, status: 404})        
-        else return item
-    }
-
-    async deleteAllCarts(){
-        let allCarts = await this.openFile()
-        allCarts = []
-        let updateAllCarts = JSON.stringify(allCarts)
-        fs.promises.writeFile(`./${this.file}`,updateAllCarts)
-        console.log('All data has been removed.')
-    }
-
     async deleteProductFromCart(cartId, deleteProductId) {
         let allCarts = await this.openFile()
         let cartIndex = allCarts.findIndex(val => val.id === cartId)
@@ -93,20 +120,7 @@ class Cart {
         await fs.promises.writeFile(`./${this.file}`,updateAllCarts)
     }
 
-    async deleteCartById(id){
-        let allCarts = await this.openFile()
-        let cartIndex = allCarts.findIndex(val => val.id === id)
-        if(cartIndex != -1){
-            //* Borra el carrito segun su index
-            allCarts.splice(cartIndex,1)
-            //! Index format
-            allCarts.forEach((val,i=0) => val["id"] = (i+1).toString())
-        }else{
-            throw ({message: `Error: Carrito con id ${id} no encontrado.`, status: 404})
-        }
-        let updateAllCarts = JSON.stringify(allCarts)
-        await fs.promises.writeFile(`./${this.file}`,updateAllCarts)
-    }
+
 }
 
 

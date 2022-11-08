@@ -1,5 +1,9 @@
 const express = require('express')
 const Cart = require('../controllers/carrito.controller')
+// const Firebase = require('../controllers/firebase.controller')
+// const MongoDB = require('../controllers/mongoDB.controller')
+
+
 
 const  { Router } = express
 
@@ -7,11 +11,21 @@ const router = Router()
 
 //* Controlador
 const cart = new Cart('./db/carritos.json')
+// const dbf = new Firebase('estudiantes')
+// const dbm = new MongoDB('carritos', {
+//     id: {type: String, required: true, unique: true},
+//     timestamp: {type: String, required: true},
+//     productos: {type: [], required: false}
+// })
 
 // //* Lista todos los productos segun el id del carrito (user + admin)
 router.get('/:id/productos', async (req,res) => {
     const cartId = req.params.id
     try {
+        // let data1 = await dbf.getAll()
+        // console.log('data1 = ', data1)
+        // let data2 = await dbm.getAll()
+        // console.log('data2 = ', data2)
         let data = await cart.getCart(cartId)
         // console.log(data)
         res.send(data)

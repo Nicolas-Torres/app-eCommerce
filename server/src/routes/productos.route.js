@@ -2,6 +2,9 @@ const express = require('express')
 const loggin = require('../middlewares/loggin.middleware')
 const Product = require('../controllers/producto.controller')
 
+const daos = require('../daos/index')
+const {carritoDAO, productoDAO} = daos()
+
 const  { Router } = express
 
 const router = Router()
@@ -17,7 +20,10 @@ router.get('/productos/:id?', async (req,res) => {
         if(id != 'all'){
             data = await product.getById(id)
         } else {
-            data = await product.getAll()
+            // data = await product.getAll()
+            console.log('productoDAO: ')
+            data = await productoDAO.getAll()
+
         }
         res.set('Content-Type', 'application/json')
         res.json(JSON.stringify(data))  // cuando se acopla con el cliente (fetch) debe enviar tipo JSON.stringify

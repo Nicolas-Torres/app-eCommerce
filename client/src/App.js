@@ -12,6 +12,15 @@ function App() {
         // setProducts(data)
         console.log(JSON.parse(data))
       })
+    
+    fetch('/api/3/productos')
+      .then(res => res.json())
+      .then(data => console.log(data))
+
+      fetch('/api/3/productos')
+      .then(res => res.json())
+      .then(data => console.log(data))
+    
   },[])
   // console.log(products)
   return (
