@@ -6,7 +6,7 @@ const  { Router } = express
 const router = Router()
 
 //* Controlador
-const cart = new Cart('/db/carritos.json')
+const cart = new Cart('./db/carritos.json')
 
 // //* Lista todos los productos segun el id del carrito (user + admin)
 router.get('/:id/productos', async (req,res) => {

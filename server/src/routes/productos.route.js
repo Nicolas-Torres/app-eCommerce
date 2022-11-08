@@ -7,7 +7,7 @@ const  { Router } = express
 const router = Router()
 
 //* Controlador
-const product = new Product('/db/productos.json')
+const product = new Product('./db/productos.json')
 
 //* Lista todos los productos o uno por su id (user + admin)
 router.get('/productos/:id?', async (req,res) => {
@@ -19,9 +19,11 @@ router.get('/productos/:id?', async (req,res) => {
         } else {
             data = await product.getAll()
         }
-        res.send(data)
+        res.set('Content-Type', 'application/json')
+        res.json(JSON.stringify(data))  // cuando se acopla con el cliente (fetch) debe enviar tipo JSON.stringify
+        // res.json(data)
     } catch (err) {
-        res.status(err.status).send(err.message)
+        res.send(err.message)
     } finally {
         console.log(`finally: GET del id ${id} terminado`)
     }

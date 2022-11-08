@@ -14,7 +14,7 @@ app.use('/api', productos)
 
 app.all('*', (req, res) => {
     const { originalUrl, method } = req
-    res.send({error: -2, descripcion: `ruta ${originalUrl} método ${method} no implementada`})
+    res.status(501).send({error: -2, descripcion: `ruta ${originalUrl} método ${method} no implementada`})
 })
 
 const server = app.listen(PORT, () => {

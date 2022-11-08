@@ -1,0 +1,24 @@
+ubicarse en la carpeta ecomerce:
+- create-react-app client
+entrar a la carpeta client y editar el achivo "package.json":
+> Debajo de "scripts" agregar: "proxy": "http://localhost:8080"
+	Ejemplo:
+		...,
+		"scripts": {
+		...
+		},
+		"proxy": "http://localhost:8080",
+		...
+
+donde 8080 es el puerto donde se esta ejecutando el servidor.
+
+Abrir 2 terminales y en cada una iniciar el servidor y el cliente por separado:
+1) iniciar el servidor (express), carpeta server:
+   previamente en el archivo "package.json" del servidor agregar el script:
+	"start": "nodemon index.js"
+
+ - npm start
+
+2) iniciar el cliente (react), carpeta client:
+
+ - npm start
