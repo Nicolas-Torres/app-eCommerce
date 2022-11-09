@@ -2,7 +2,7 @@ const Firebase = require('../../controllers/firebase.controller')
 
 class ProductoDAOFirebase extends Firebase {
     constructor(){
-        super('estudiantes')
+        super('productos')
     }
 
     async daof(){

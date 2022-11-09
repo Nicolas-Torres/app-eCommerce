@@ -3,7 +3,7 @@ const loggin = require('../middlewares/loggin.middleware')
 const Product = require('../controllers/producto.controller')
 
 const daos = require('../daos/index')
-const {carritoDAO, productoDAO} = daos()
+const { productoDAO } = daos()
 
 const  { Router } = express
 
@@ -18,15 +18,16 @@ router.get('/productos/:id?', async (req,res) => {
     try {
         let data
         if(id != 'all'){
-            data = await product.getById(id)
+            // data = await product.getById(id)
+            data = await productoDAO.getById(id)
         } else {
             // data = await product.getAll()
-            console.log('productoDAO: ')
+            // console.log('productoDAO: ')
             data = await productoDAO.getAll()
 
         }
         res.set('Content-Type', 'application/json')
-        res.json(JSON.stringify(data))  // cuando se acopla con el cliente (fetch) debe enviar tipo JSON.stringify
+        res.json(data)  // cuando se acopla con el cliente (fetch) debe enviar tipo JSON.stringify
         // res.json(data)
     } catch (err) {
         res.send(err.message)
@@ -41,9 +42,13 @@ router.use(loggin)
 //* Agregar producto (admin)
 router.post('/productos/', async (req,res) => {
     const newProduct = req.body
+    // console.log(newProduct)
     const data = { timestamp: new Date().toLocaleString(), ...newProduct }
+    console.log(data)
     try {
-        await product.add(data)
+        // console.log(data)
+        // await product.add(data)
+        await productoDAO.add(data)
         res.status(201).send(data)
     } catch (err) {
         res.send(err.message)
@@ -57,7 +62,8 @@ router.put('/productos/:id', async (req,res) => {
     const id = req.params.id
     const props = req.body
     try {
-        const updateProduct = await product.update(id, props)
+        // const updateProduct = await product.update(id, props)
+        const updateProduct = await productoDAO.update(id, props)
         res.send(updateProduct)
     } catch (err) {
         res.status(err.status).send(err.message)
@@ -70,7 +76,7 @@ router.put('/productos/:id', async (req,res) => {
 router.delete('/productos/:id', async (req,res) => {
     const id = req.params.id
     try {
-        await product.deleteById(id)
+        await productoDAO.delete(id)
         res.send(`Producto ${id} borrado.`)
     } catch (err) {
         res.status(err.status).send(err.message)

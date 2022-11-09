@@ -27,10 +27,10 @@ class Mongo {
     }
 
     //! CREATE
-    async newCart(newCart) {
+    async add(doc) {
         // console.log('newCart = ', newCart)
         try {
-            const newDoc = await this.db.create(newCart)
+            const newDoc = await this.db.create(doc)
             // console.log('new Doc', newDoc)
             return newDoc
         } catch (e) {
@@ -44,10 +44,23 @@ class Mongo {
         return lista
     }
 
-    //! UPDATE
+    async getById(id){
+        const doc = await this.db.findOne({id: id})
+        return doc
+    }
 
+    //! UPDATE
+    async update(id, props){
+        const doc = await this.db.updateOne({id: id}, {$set: props})
+    }
 
     //! DELETE
+    async delete(id){
+        const doc = await this.db.deleteOne({id: id})
+    }
+
+
+
 }
 
 module.exports = Mongo

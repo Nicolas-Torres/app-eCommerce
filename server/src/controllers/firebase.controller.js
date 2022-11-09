@@ -18,7 +18,7 @@ class Firebase {
 
     //! CREATE
     async add(doc){
-        await this.collection(doc)
+        await this.collection.add(doc)
     }
     //! READ
     async getAll(){
@@ -30,18 +30,26 @@ class Firebase {
     }
 
     async getById(id){
-        const doc = await this.collection.doc(id).get()
-        console.log(doc)
+        try{
+            const doc = await this.collection.doc(id).get()
+            // console.log(doc.data())
+            return doc.data()
+        } catch (e){
+            console.log(e)
+        }
     }
 
     //! UPDATE
-    async updateById(id, prop){
-        const doc = await this.collection.doc(id).set(prop)
-        console.log(doc)
+    async update(id, props){
+        // console.log(props)
+        await this.collection.doc(id).update(props)
+        const doc = await this.collection.doc(id).get()
+        // console.log(doc)
+        return doc.data()
     }
 
     //! DELETE
-    async deleteById(id){
+    async delete(id){
         const doc = await this.collection.doc(id).delete()
         console.log(doc)
     }
